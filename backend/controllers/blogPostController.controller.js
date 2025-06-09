@@ -85,7 +85,7 @@ export const updatePost = async (req, res) => {
     // Check if blog post is available for Id
     if (!post) {
       return res.status(400).json({
-        message: "Could not found blog post for id you searching for",
+        message: "Could not found blog post for Id",
       });
     }
 
@@ -127,6 +127,16 @@ export const updatePost = async (req, res) => {
 // Access      => Private | Admin Only
 export const deletePost = async (req, res) => {
   try {
+    const post = await BlogPost.findById(req.params.id);
+
+    // Check if post is available for the Id
+    if (!post) {
+      return res.status(400).json({ message: "Could not find the blog post for Id" });
+    }
+
+    // Delete post
+    await post.deleteOne();
+    res.status(200).json({ message: "Blog post deleted"})
   } catch (error) {
     res.status(500).json({ message: "Server error", error: error.message });
   }
