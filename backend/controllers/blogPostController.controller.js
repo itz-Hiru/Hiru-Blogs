@@ -40,6 +40,44 @@ export const createPost = async (req, res) => {
 // Access      => Public
 export const getAllPosts = async (req, res) => {
   try {
+    const status = req.query.status || "published";
+    const page = parseInt(req.query.page) || 1;
+    const limit = 5;
+    const skip = (page - 1) * limit;
+
+    // Determine filter for main posts response
+    let filter = {};
+
+    if (status === "published") filter.isDraft = false;
+    else if (status === "draft") filter.isDraft = true;
+
+    // Fetch paginated posts
+    const posts = await BlogPost.find(filter)
+      .populate("author", "name profileImageUrl")
+      .sort({ updateAt: -1 })
+      .skip(skip)
+      .limit(limit);
+
+    // Count totals for pagination and tab counts
+    const [totalCount, allCount, publishedCount, draftCount] =
+      await Promise.all([
+        BlogPost.countDocuments(filter), // for pagination count tab
+        BlogPost.countDocuments(),
+        BlogPost.countDocuments({ isDraft: false }),
+        BlogPost.countDocuments({ isDraft: true }),
+      ]);
+
+    res.status(200).json({
+      posts,
+      page,
+      totalPages: Math.ceil(totalCount / limit),
+      totalCount,
+      counts: {
+        all: allCount,
+        published: publishedCount,
+        draft: draftCount,
+      },
+    });
   } catch (error) {
     res.status(500).json({ message: "Server error", error: error.message });
   }
@@ -131,12 +169,14 @@ export const deletePost = async (req, res) => {
 
     // Check if post is available for the Id
     if (!post) {
-      return res.status(400).json({ message: "Could not find the blog post for Id" });
+      return res
+        .status(400)
+        .json({ message: "Could not find the blog post for Id" });
     }
 
     // Delete post
     await post.deleteOne();
-    res.status(200).json({ message: "Blog post deleted"})
+    res.status(200).json({ message: "Blog post deleted" });
   } catch (error) {
     res.status(500).json({ message: "Server error", error: error.message });
   }
