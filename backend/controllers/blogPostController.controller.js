@@ -218,6 +218,26 @@ export const incrementView = async (req, res) => {
 // Access      => Public
 export const searchPost = async (req, res) => {
   try {
+    const q = req.query.q;
+    // Check if searching is String
+    if (typeof q !== 'string' || q.trim() === '') {
+      return res.status(400).json({ message: "Invalid search query" });
+    }
+
+    const posts = await BlogPost.find({
+      isDraft: false,
+      $or: [
+        { title: { $regex: q, $options: "i" } }, // title
+        { content: { $regex: q, $options: "i" } }, // content
+      ],
+    }).populate("author", "profileImageUrl");
+
+    // Check if available
+    if (!posts) {
+      return res.status(400).json({ message: "No posts found" });
+    }
+
+    res.status(200).json(posts);
   } catch (error) {
     res.status(500).json({ message: "Server error", error: error.message });
   }
