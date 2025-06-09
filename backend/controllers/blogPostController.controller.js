@@ -109,6 +109,16 @@ export const getPostBySlug = async (req, res) => {
 // Access      => Public
 export const getPostByTag = async (req, res) => {
   try {
+    const posts = await BlogPost.find({
+      tags: req.params.tag,
+      isDraft: false,
+    }).populate("author", "name profileImageUrl");
+
+    if (!posts) {
+      return res.status(400).json({ message: "No blog posts found" });
+    }
+
+    res.status(200).json(posts);
   } catch (error) {
     res.status(500).json({ message: "Server error", error: error.message });
   }
