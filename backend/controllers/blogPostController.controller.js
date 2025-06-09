@@ -250,6 +250,8 @@ export const searchPost = async (req, res) => {
 // Access      => Private
 export const likePost = async (req, res) => {
   try {
+    await BlogPost.findByIdAndUpdate(req.params.id, { $inc: { likes: 1 } });
+    res.status(200).json({ message: "Like count incremented" });
   } catch (error) {
     res.status(500).json({ message: "Server error", error: error.message });
   }
