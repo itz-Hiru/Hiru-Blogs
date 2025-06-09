@@ -88,6 +88,17 @@ export const getAllPosts = async (req, res) => {
 // Access      => Public
 export const getPostBySlug = async (req, res) => {
   try {
+    const post = await BlogPost.findOne({ slug: req.params.slug }).populate(
+      "author",
+      "name profileImageUrl"
+    );
+
+    // Check if post is available
+    if (!post) {
+      return res.status(400).json({ message: "Post not found" });
+    }
+
+    res.status(200).json(post);
   } catch (error) {
     res.status(500).json({ message: "Server error", error: error.message });
   }
