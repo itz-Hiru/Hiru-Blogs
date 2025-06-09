@@ -8,6 +8,7 @@ import { fileURLToPath } from "url";
 
 import connectDB from "./config/db.config.js";
 import authRoutes from "./routes/authRoutes.route.js";
+import blogPostRoutes from "./routes/blogPostRoutes.route.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -31,6 +32,7 @@ app.use(express.json());
 
 // Routes
 app.use("/api/auth", authRoutes);
+app.use("/api/posts", blogPostRoutes);
 
 // Serve uploads folder
 app.use("/uploads", express.static(path.join(__dirname, "uploads"), {}));
