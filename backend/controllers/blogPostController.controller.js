@@ -129,6 +129,15 @@ export const getPostByTag = async (req, res) => {
 // Access      => Public
 export const getTopPosts = async (req, res) => {
   try {
+    const posts = await BlogPost.find({ isDraft: false })
+      .sort({ views: -1, likes: -1 }) // Sort from likes and views
+      .limit(6);
+
+    if (!posts) {
+      return res.status(400).json({ message: "No posts found" });
+    }
+
+    res.status(200).json(posts);
   } catch (error) {
     res.status(500).json({ message: "Server error", error: error.message });
   }
