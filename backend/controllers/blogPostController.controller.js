@@ -208,6 +208,8 @@ export const deletePost = async (req, res) => {
 // Access      => Public
 export const incrementView = async (req, res) => {
   try {
+    await BlogPost.findByIdAndUpdate(req.params.id, { $inc: { views: 1 } });
+    res.status(200).json({ message: "View count incremented." });
   } catch (error) {
     res.status(500).json({ message: "Server error", error: error.message });
   }
@@ -220,7 +222,7 @@ export const searchPost = async (req, res) => {
   try {
     const q = req.query.q;
     // Check if searching is String
-    if (typeof q !== 'string' || q.trim() === '') {
+    if (typeof q !== "string" || q.trim() === "") {
       return res.status(400).json({ message: "Invalid search query" });
     }
 
