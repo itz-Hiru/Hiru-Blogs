@@ -17,14 +17,14 @@ export const createPost = async (req, res) => {
 
     // Create new blog post
     const newPost = new BlogPost({
-        title,
-        slug,
-        content,
-        coverImageUrl,
-        tags,
-        author: req.user._id,
-        isDraft,
-        generatedByAI,
+      title,
+      slug,
+      content,
+      coverImageUrl,
+      tags,
+      author: req.user._id,
+      isDraft,
+      generatedByAI,
     });
 
     await newPost.save();
@@ -80,6 +80,43 @@ export const getTopPosts = async (req, res) => {
 // Access      => Private | Admin Only
 export const updatePost = async (req, res) => {
   try {
+    const post = await BlogPost.findById(req.params.id);
+
+    // Check if blog post is available for Id
+    if (!post) {
+      return res.status(400).json({
+        message: "Could not found blog post for id you searching for",
+      });
+    }
+
+    // Check if user is admin or not
+    if (
+      post.author.toString() !== req.user._id.toString() &&
+      !req.user.isAdmin
+    ) {
+      return res
+        .status(400)
+        .json({ message: "You have no permissions to update post" });
+    }
+
+    const updateData = req.body;
+
+    // Update slug if title updated
+    if (updateData.title) {
+      updateData.slug = updateData.title
+        .toLowerCase()
+        .replace(/ /g, "-")
+        .replace(/[^\w-]+/g, "");
+    }
+
+    // Update post
+    const updatePost = await BlogPost.findByIdAndUpdate(
+      req.params.id,
+      updateData,
+      { new: true }
+    );
+
+    res.status(200).json(updatePost);
   } catch (error) {
     res.status(500).json({ message: "Server error", error: error.message });
   }
