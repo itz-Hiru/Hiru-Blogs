@@ -51,14 +51,14 @@ export const generateBlogPostIdeas = async (req, res) => {
 
     // Check if require fields are not empty
     if (!topics) {
-        return res.status(400).json({ message: "Missing required fields" })
+      return res.status(400).json({ message: "Missing required fields" });
     }
 
     const prompt = blogPostIdeasPrompt(topics);
 
     const response = await ai.models.generateContent({
-        model: "gemini-2.0-flash-lite",
-        contents: prompt,
+      model: "gemini-2.0-flash-lite",
+      contents: prompt,
     });
 
     const rawText = response?.candidates?.[0]?.content?.parts?.[0]?.text || "";
@@ -82,6 +82,22 @@ export const generateBlogPostIdeas = async (req, res) => {
 // Access      => Private
 export const generateCommentReply = async (req, res) => {
   try {
+    const { author, content } = req.body;
+
+    // Check missing input fields
+    if (!content) {
+      return res.status(400).json({ message: "Missing required fields" });
+    }
+
+    const prompt = generateReplyPrompt({ author, content });
+
+    const response = await ai.models.generateContent({
+      model: "gemini-2.0-flash-lite",
+      contents: prompt,
+    });
+
+    let rawText = response.text;
+    res.status(200).json(rawText);
   } catch (error) {
     res.status(500).json({ message: "Serer Error", error: error.message });
   }
