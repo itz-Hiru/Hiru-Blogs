@@ -22,6 +22,7 @@ export const generateBlogPost = async (req, res) => {
   try {
     const { title, tone } = req.body;
 
+    // Check if require fields are not empty
     if (!title || !tone) {
       res.status(400).json({ message: "Missing Required Fields" });
     }
@@ -46,6 +47,31 @@ export const generateBlogPost = async (req, res) => {
 // Access      => Private
 export const generateBlogPostIdeas = async (req, res) => {
   try {
+    const { topics } = req.body;
+
+    // Check if require fields are not empty
+    if (!topics) {
+        return res.status(400).json({ message: "Missing required fields" })
+    }
+
+    const prompt = blogPostIdeasPrompt(topics);
+
+    const response = await ai.models.generateContent({
+        model: "gemini-2.0-flash-lite",
+        contents: prompt,
+    });
+
+    const rawText = response?.candidates?.[0]?.content?.parts?.[0]?.text || "";
+
+    // Clean JSON(Remove
+    const cleanedText = rawText
+      .replace(/^```json\s*/, "") // Clean starting
+      .replace(/```$/, "") // Clean ending
+      .trim(); // Remove extra spaces
+
+    // Parse
+    const data = JSON.parse(cleanedText);
+    res.status(200).json(data);
   } catch (error) {
     res.status(500).json({ message: "Serer Error", error: error.message });
   }
