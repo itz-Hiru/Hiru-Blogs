@@ -12,15 +12,15 @@ export const addComment = async (req, res) => {
     // Check if blog post is exists
     const post = await BlogPost.findById(postId);
     if (!post) {
-        return res.status(400).json({ message: "Could not found the post" });
+      return res.status(400).json({ message: "Could not found the post" });
     }
 
     // Create comment
     const comment = await Comment.create({
-        post: postId,
-        author: req.user._id,
-        content,
-        parentComment: parentComment || null,
+      post: postId,
+      author: req.user._id,
+      content,
+      parentComment: parentComment || null,
     });
 
     await comment.populate("author", "name profileImageUrl");
@@ -46,6 +46,34 @@ export const getCommentByPost = async (req, res) => {
 // Access      => Public
 export const getAllComments = async (req, res) => {
   try {
+    // Fetch all comments with author populated
+    const comments = await Comment.find()
+      .populate("author", "name profileImageUrl")
+      .populate("post", "title coverImageUrl")
+      .sort({ createdAt: 1 }); // Replies comes in order
+
+    // Create a map for commentId => comment object
+    const commentMap = {};
+    comments.forEach(comment => {
+        comment = comment.toObject(); // Convert from mongoose document to plain object
+        comment.replies = []; // Initialize replies array
+        commentMap[comment._id] = comment;
+    });
+
+    // Nest replies under their comments
+    const nestedComments = [];
+    comments.forEach(comment => {
+        if (comment.parentComment) {
+            const parent = commentMap[comment.parentComment];
+            if (parent) {
+                parent.replies.push(commentMap[comment._id]);
+            }
+        } else {
+            nestedComments.push(commentMap[comment._id]);
+        }
+    });
+
+    res.status(200).json(nestedComments);
   } catch (error) {
     res.status(500).json({ message: "Server Error", error: error.message });
   }
