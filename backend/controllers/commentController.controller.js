@@ -36,6 +36,35 @@ export const addComment = async (req, res) => {
 // Access      => Public
 export const getCommentByPost = async (req, res) => {
   try {
+    const { postId } = req.params;
+
+    const comments = await Comment.find({ post: postId })
+      .populate("author", "name profileImageUrl")
+      .populate("post", "coverImageUrl")
+      .sort({ createdAt: 1 }); // Replies comes in order
+
+    // Create a map for commentId => comment object
+    const commentMap = {};
+    comments.forEach((comment) => {
+      comment = comment.toObject(); // Convert from mongoose document to plain object
+      comment.replies = []; // Initialize replies array
+      commentMap[comment._id] = comment;
+    });
+
+    // Nest replies under their comments
+    const nestedComments = [];
+    comments.forEach((comment) => {
+      if (comment.parentComment) {
+        const parent = commentMap[comment.parentComment];
+        if (parent) {
+          parent.replies.push(commentMap[comment._id]);
+        }
+      } else {
+        nestedComments.push(commentMap[comment._id]);
+      }
+    });
+
+    res.status(200).json(nestedComments);
   } catch (error) {
     res.status(500).json({ message: "Server Error", error: error.message });
   }
@@ -54,23 +83,23 @@ export const getAllComments = async (req, res) => {
 
     // Create a map for commentId => comment object
     const commentMap = {};
-    comments.forEach(comment => {
-        comment = comment.toObject(); // Convert from mongoose document to plain object
-        comment.replies = []; // Initialize replies array
-        commentMap[comment._id] = comment;
+    comments.forEach((comment) => {
+      comment = comment.toObject(); // Convert from mongoose document to plain object
+      comment.replies = []; // Initialize replies array
+      commentMap[comment._id] = comment;
     });
 
     // Nest replies under their comments
     const nestedComments = [];
-    comments.forEach(comment => {
-        if (comment.parentComment) {
-            const parent = commentMap[comment.parentComment];
-            if (parent) {
-                parent.replies.push(commentMap[comment._id]);
-            }
-        } else {
-            nestedComments.push(commentMap[comment._id]);
+    comments.forEach((comment) => {
+      if (comment.parentComment) {
+        const parent = commentMap[comment.parentComment];
+        if (parent) {
+          parent.replies.push(commentMap[comment._id]);
         }
+      } else {
+        nestedComments.push(commentMap[comment._id]);
+      }
     });
 
     res.status(200).json(nestedComments);
