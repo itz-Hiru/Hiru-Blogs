@@ -113,6 +113,21 @@ export const getAllComments = async (req, res) => {
 // Access      => Private
 export const deleteComment = async (req, res) => {
   try {
+    const { commentId } = req.params;
+
+    const comment = await Comment.findById(commentId);
+    // Check if comment is available
+    if (!comment) {
+      res.status(400).json({ message: "Comment not found" });
+    }
+
+    // Delete comment
+    await Comment.deleteOne({ _id: commentId });
+
+    // Delete all replies
+    await Comment.deleteMany({ parentComment: commentId });
+
+    res.status(200).json({ message: "Comment and replies deleted." });
   } catch (error) {
     res.status(500).json({ message: "Server Error", error: error.message });
   }
