@@ -5,7 +5,8 @@
     --font-display: "Urbanist", sans-serif;
     --font-header: "Pacifico", cursive;
     --breakpoint-3xl: 1920px;
-    --color-primary: #B33791;
+    --color-primary: #7965C1;
+    --color-secondary: #483AA0;
 }
 
 @layer base {
