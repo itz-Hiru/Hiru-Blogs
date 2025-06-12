@@ -1,11 +1,11 @@
 import { useContext, useState } from "react";
+import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import Input from "../../components/Inputs/Input.component";
-import toast from "react-hot-toast";
-import { validateEmail } from "../../utils/helper.util";
-import axiosInstance from "../../utils/axiosInstance.util";
-import { API_PATHS } from "../../utils/apiPaths.util";
 import { UserContext } from "../../context/userContext.context";
+import { API_PATHS } from "../../utils/apiPaths.util";
+import axiosInstance from "../../utils/axiosInstance.util";
+import { validateEmail } from "../../utils/helper.util";
 
 const Login = ({ setCurrentPage }) => {
   const navigate = useNavigate();
@@ -17,24 +17,26 @@ const Login = ({ setCurrentPage }) => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setIsLoading(true);
 
-    if (!validateEmail(email)) {
+    const trimmedEmail = email.trim();
+    const trimmedPassword = password.trim();
+
+    if (!validateEmail(trimmedEmail)) {
       toast.error("Invalid Email Address");
-      setIsLoading(false);
       return;
     }
 
-    if (!password) {
-      toast.error("Please enter password");
-      setIsLoading(false);
+    if (!trimmedPassword) {
+      toast.error("Please enter your password");
       return;
     }
 
     try {
+      setIsLoading(true);
+
       const response = await axiosInstance.post(API_PATHS.AUTH.LOGIN, {
-        email,
-        password,
+        email: trimmedEmail,
+        password: trimmedPassword,
       });
 
       const { token, role } = response.data;
@@ -43,26 +45,25 @@ const Login = ({ setCurrentPage }) => {
         localStorage.setItem("token", token);
         updateUser(response.data);
 
+        toast.success("Logged in successfully");
+
         if (role === "admin") {
           navigate("/admin/dashboard");
-          setIsLoading(false);
-          toast.success("Logging Successfully.");
-        } else if (role === "member") {
+        } else {
           navigate("/dashboard");
-          setIsLoading(false);
-          toast.success("Logging Successfully");
         }
       }
     } catch (error) {
-      if (error.response && error.response.data.message) {
-        setIsLoading(false)
+      if (error.response?.data?.message) {
         toast.error(error.response.data.message);
       } else {
         toast.error("Something went wrong. Please try again");
-        setIsLoading(false);
       }
+    } finally {
+      setIsLoading(false);
     }
   };
+
   return (
     <div className="w-[90vw] md:w-[33vw] p-7 flex-col justify-center">
       <h3 className="text-lg font-semibold text-black">Welcome Back</h3>
@@ -84,17 +85,20 @@ const Login = ({ setCurrentPage }) => {
           placeholder="********"
           type="password"
         />
-        <button type="submit" disabled={isLoading} className="btn-primary">
+        <button
+          type="submit"
+          disabled={isLoading}
+          aria-label="Login"
+          className="btn-primary mt-4 w-full"
+        >
           {isLoading ? "Logging in..." : "Login"}
         </button>
         <p className="text-[13px] text-black/80 mt-5">
-          Don't have an account ?{" "}
+          Don't have an account?{" "}
           <button
             type="button"
             className="font-medium text-blue-600 underline cursor-pointer"
-            onClick={() => {
-              setCurrentPage("signup");
-            }}
+            onClick={() => setCurrentPage("signup")}
           >
             SignUp
           </button>

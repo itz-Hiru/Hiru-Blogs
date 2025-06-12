@@ -5,8 +5,8 @@
     --font-display: "Urbanist", sans-serif;
     --font-header: "Pacifico", cursive;
     --breakpoint-3xl: 1920px;
-    --color-primary: #F6339A;
-    --color-secondary: #FF2056;
+    --color-primary: #4e70f0;
+    --color-secondary: #5bd4f1;
 }
 
 @layer base {
@@ -80,17 +80,17 @@
 
 /* Input */
 .input-box {
-    @apply w-full flex justify-between gap-3 text-sm text-black bg-gray-50/50 rounded px-4 py-3 mb-4 mt-3 border border-gray-100 outline-none focus-within:border-rose-300;
+    @apply w-full flex justify-between gap-3 text-sm text-black bg-gray-50/50 rounded px-4 py-3 mb-4 mt-3 border border-gray-100 outline-none focus-within:border-sky-300;
 }
 
 /* Primary button */
 .btn-primary {
-    @apply w-full flex items-center justify-center gap-3 text-sm font-semibold text-white bg-linear-to-r from-primary to-secondary p-[10px] rounded-md my-1 transition-all hover:scale-[1.01] hover:text-white cursor-pointer;
+    @apply w-full flex items-center justify-center gap-3 text-sm font-semibold text-white bg-linear-to-r from-sky-500 to-cyan-400 p-[10px] rounded-md my-1 transition-all hover:scale-[1.01] hover:text-white cursor-pointer;
 }
 
 /* Secondary button */
 .btn-secondary {
-    @apply flex items-center justify-center gap-3 text-sm font-semibold text-white bg-linear-to-r from-secondary to-primary px-7 py-2 rounded-lg hover:bg-black hover:text-white transition-colors cursor-pointer hover:shadow-2xl hover:shadow-rose-200;
+    @apply flex items-center justify-center gap-3 text-sm font-semibold text-white bg-linear-to-r from-sky-500 to-cyan-400 px-7 py-2 rounded-lg hover:bg-black hover:text-white transition-colors cursor-pointer hover:shadow-2xl hover:shadow-rose-200;
 }
 
 /* Form card */

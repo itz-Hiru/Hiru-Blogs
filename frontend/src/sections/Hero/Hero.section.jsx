@@ -4,11 +4,11 @@ import MOBILE_HERO_IMAGE from "../../assets/mobile_hero_image.png";
 const Hero = ({ onClick }) => {
   return (
     <section
-      className="md:min-h-[90vh] mt-20 md:mt-24 flex flex-col-reverse md:flex-row items-center justify-between mx-auto mb-10"
+      className="md:min-h-[90vh] mt-20 md:mt-24 flex flex-col-reverse md:flex-row items-center justify-between pb-10"
       id="hero"
     >
       <div className="flex flex-col items-center md:items-start mt-2 md:mt-0">
-        <div className="hidden md:flex items-center mb-2">
+        <div className="hidden md:flex items-center mb-2 w-full">
           <span className="text-[13px] text-black/60 font-semibold mr-2">
             Welcome
           </span>
@@ -16,7 +16,7 @@ const Hero = ({ onClick }) => {
         </div>
         <h1 className="text-4xl md:text-6xl font-semibold leading-tight text-black">
           Share Your{" "}
-          <span className="text-transparent bg-clip-text bg-[radial-gradient(circle,_#F6339A_0%,_#FF2056_100%)] bg-[length:200%_200%] animate-text-shine font-bold">
+          <span className="text-transparent bg-clip-text bg-[radial-gradient(circle,_#4E70F0_0%,_#5BD4F1_100%)] bg-[length:200%_200%] animate-text-shine font-bold">
             Voice
           </span>
           <br /> Inspire the World
@@ -29,7 +29,7 @@ const Hero = ({ onClick }) => {
           <button
             type="button"
             onClick={onClick}
-            className="bg-pink-500 text-white px-6 py-2.5 rounded-md font-medium transition-colors duration-500 border border-primary focus:bg-transparent focus:text-primary hover:bg-transparent hover:text-primary"
+            className="bg-primary text-white px-6 py-2.5 rounded-md font-medium transition-colors duration-500 border border-primary focus:bg-transparent focus:text-primary hover:bg-transparent hover:text-primary"
           >
             Read Now
           </button>

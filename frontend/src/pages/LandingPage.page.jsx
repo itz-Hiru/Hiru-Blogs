@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar/Navbar.component";
 import Modal from "../components/Modals/Modal.component";
@@ -11,9 +11,11 @@ import TopCharts from "../sections/TopCharts/TopCharts.section";
 import Testimonials from "../sections/Testimonials/Testimonials.section";
 import CTA from "../sections/CTA/CTA.section";
 import About from "../sections/About/About.section";
+import { UserContext } from "../context/userContext.context";
 
 const LandingPage = () => {
   const navigate = useNavigate();
+  const { user } = useContext(UserContext);
 
   const [openAuthModal, setOpenAuthModal] = useState(false);
   const [currentPage, setCurrentPage] = useState("login");
@@ -21,14 +23,14 @@ const LandingPage = () => {
   const handleCTA = () => {};
   return (
     <div>
-      <Navbar onClick={() => setOpenAuthModal(true)} />
+      <Navbar onClick={() => setOpenAuthModal(true)} user={user}/>
       <img
         src="https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/hero/gradientBackground.png"
         alt=""
         className="absolute top-0 left-0 h-[100vh] object-cover z-0"
       />
       <div className="relative z-10">
-        <div className="container mx-auto">
+        <div className="container md:px-16 lg:px-24 xl:px-32">
           <Hero onClick={handleCTA} />
           <About />
           <Features />
