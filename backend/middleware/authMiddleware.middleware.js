@@ -3,19 +3,28 @@ import User from "../models/User.model.js";
 
 // Middleware to protect routes
 export const protect = async (req, res, next) => {
-  try {
-    let token = req.headers.authorization;
+  let token;
 
-    if (token && token.startsWith("Bearer")) {
-      token = token.split(" ")[1]; // Extract token
+  if (
+    req.headers.authorization &&
+    req.headers.authorization.startsWith("Bearer ")
+  ) {
+    try {
+      token = req.headers.authorization.split(" ")[1];
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
-      req.user = await User.findById(decoded.id).select("-password");
+      const user = await User.findById(decoded.id).select("-password");
+
+      if (!user) {
+        return res.status(401).json({ message: "User not found." });
+      }
+
+      req.user = user;
       next();
-    } else {
-      res.status(400).json({ message: "Not authorized. No token found." });
+    } catch (error) {
+      return res.status(401).json({ message: "Invalid or expired token." });
     }
-  } catch (error) {
-    res.status(500).json({ message: "Token failed", error: error.message });
+  } else {
+    return res.status(401).json({ message: "Not authorized. Token missing." });
   }
 };
 
