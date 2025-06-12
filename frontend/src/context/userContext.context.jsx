@@ -41,7 +41,6 @@ const UserProvider = ({ children }) => {
 
   const clearUser = () => {
     setUser(null);
-    setSearchResults([]);
     localStorage.removeItem("token");
   };
   return (

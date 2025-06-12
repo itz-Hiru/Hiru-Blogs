@@ -1,4 +1,4 @@
-export const BASE_URL = "http://localhost:500"; // Base Server URL
+export const BASE_URL = "http://localhost:5000"; // Base Server URL
 
 export const API_PATHS = {
   AUTH: {

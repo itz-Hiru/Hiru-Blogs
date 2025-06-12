@@ -37,7 +37,7 @@ axiosInstance.interceptors.response.use(
         //  Redirect to login page
         window.location.href = "/";
       } else if (error.response.status === 500) {
-        toast.error("Server Error. Please try again later.");
+        console.error("Server Error. Please try again later.");
       }
     } else if (error.code === "ECONNABORTED") {
       toast.error("Request timeout. Please try again.");
