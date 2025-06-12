@@ -10,6 +10,7 @@ import Features from "../sections/Features/Features.section";
 import TopCharts from "../sections/TopCharts/TopCharts.section";
 import Testimonials from "../sections/Testimonials/Testimonials.section";
 import CTA from "../sections/CTA/CTA.section";
+import About from "../sections/About/About.section";
 
 const LandingPage = () => {
   const navigate = useNavigate();
@@ -29,6 +30,7 @@ const LandingPage = () => {
       <div className="relative z-10">
         <div className="container mx-auto">
           <Hero onClick={handleCTA} />
+          <About />
           <Features />
           <TopCharts />
           <Testimonials />

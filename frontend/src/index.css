@@ -85,12 +85,12 @@
 
 /* Primary button */
 .btn-primary {
-    @apply w-full flex items-center justify-center gap-3 text-sm font-semibold text-white bg-linear-to-r from-red-500 to-rose-400 p-[10px] rounded-md my-1 transition-all hover:scale-[1.01] hover:text-white cursor-pointer;
+    @apply w-full flex items-center justify-center gap-3 text-sm font-semibold text-white bg-linear-to-r from-primary to-secondary p-[10px] rounded-md my-1 transition-all hover:scale-[1.01] hover:text-white cursor-pointer;
 }
 
 /* Secondary button */
 .btn-secondary {
-    @apply flex items-center justify-center gap-3 text-sm font-semibold text-white bg-linear-to-r from-red-500 to-rose-400 px-7 py-2 rounded-lg hover:bg-black hover:text-white transition-colors cursor-pointer hover:shadow-2xl hover:shadow-rose-200;
+    @apply flex items-center justify-center gap-3 text-sm font-semibold text-white bg-linear-to-r from-secondary to-primary px-7 py-2 rounded-lg hover:bg-black hover:text-white transition-colors cursor-pointer hover:shadow-2xl hover:shadow-rose-200;
 }
 
 /* Form card */

@@ -1,7 +1,7 @@
 const Modal = ({ isOpen, onClose, title, hideHeader, children }) => {
   if (!isOpen) return null;
   return (
-    <div className="fixed inset-0 z-50 flex justify-center items-center w-full h-full">
+    <div className="fixed inset-0 z-50 bg-black/40 flex justify-center items-center w-full h-full">
       <div className="relative flex flex-col bg-white shadow-md shadow-black/30 rounded-lg overflow-hidden">
         {!hideHeader && (
           <div className="flex items-center justify-between p-4 border-b border-black/20">
@@ -9,7 +9,7 @@ const Modal = ({ isOpen, onClose, title, hideHeader, children }) => {
           </div>
         )}
         <button
-          className="text-black/40 bg-transparent hover:bg-primary hover:text-white rounded-lg text-sm w-8 h-8 flex justify-center items-center text-center absolute top-3.5 right-3.5 cursor-pointer"
+          className="text-black/40 bg-transparent hover:bg-red-500 hover:text-white rounded-lg text-sm w-8 h-8 flex justify-center items-center text-center absolute top-3.5 right-3.5 cursor-pointer"
           onClick={onClose}
           type="button"
         >
