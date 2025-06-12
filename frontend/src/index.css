@@ -5,13 +5,14 @@
     --font-display: "Urbanist", sans-serif;
     --font-header: "Pacifico", cursive;
     --breakpoint-3xl: 1920px;
-    --color-primary: #7965C1;
-    --color-secondary: #483AA0;
+    --color-primary: #F6339A;
+    --color-secondary: #FF2056;
 }
 
 @layer base {
     html {
         font-family: var(--font-display);
+        scroll-behavior: smooth;
     }
 
     body {
@@ -39,12 +40,26 @@
     background: transparent;
 }
 
+@keyframes text-shine {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    100% {
+        background-position: 100% 50%;
+    }
+}
+
+.animate-text-shine {
+    animation: text-shine 3s ease-in-out infinite alternate;
+}
+
 /* Editor */
 .w-md-editor {
     height: 400px !important;
 }
 
-.w-md-editor-toolbar li > button {
+.w-md-editor-toolbar li>button {
     height: 40px !important;
     font-size: 24px !important;
     color: #4A5568 !important;

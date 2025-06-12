@@ -17,10 +17,15 @@ const LandingPage = () => {
   const [openAuthModal, setOpenAuthModal] = useState(false);
   const [currentPage, setCurrentPage] = useState("login");
 
-  const handleCTA = () => {}
+  const handleCTA = () => {};
   return (
     <div>
       <Navbar onClick={() => setOpenAuthModal(true)} />
+      <img
+        src="https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/hero/gradientBackground.png"
+        alt=""
+        className="absolute top-0 left-0 h-[100vh] object-cover z-0"
+      />
       <div className="relative z-10">
         <div className="container mx-auto">
           <Hero onClick={handleCTA} />
