@@ -4,10 +4,10 @@ import MOBILE_HERO_IMAGE from "../../assets/mobile_hero_image.png";
 const Hero = ({ onClick }) => {
   return (
     <section
-      className="md:min-h-[90vh] mt-20 md:mt-24 flex flex-col-reverse md:flex-row items-center justify-between pb-10"
+      className="md:min-h-[100vh] mt-10 md:mt-16 flex flex-col-reverse md:flex-row items-center justify-between pb-10"
       id="hero"
     >
-      <div className="flex flex-col items-center md:items-start mt-2 md:mt-0">
+      <div className="flex w-full md:w-1/2 flex-col items-center md:items-start mt-2 md:mt-0">
         <div className="hidden md:flex items-center mb-2 w-full">
           <span className="text-[13px] text-black/60 font-semibold mr-2">
             Welcome
@@ -41,16 +41,18 @@ const Hero = ({ onClick }) => {
           </a>
         </div>
       </div>
-      <img
-        className="hidden md:block md:max-w-[465px]"
-        src={DESKTOP_HERO_IMAGE}
-        alt="desktop_hero_image"
-      />
-      <img
-        className="block md:hidden w-full"
-        src={MOBILE_HERO_IMAGE}
-        alt="mobile_hero_image"
-      />
+      <div className="flex w-full md:w-1/2 justify-end items-center">
+        <img
+          className="hidden md:block "
+          src={DESKTOP_HERO_IMAGE}
+          alt="desktop_hero_image"
+        />
+        <img
+          className="block md:hidden w-full"
+          src={MOBILE_HERO_IMAGE}
+          alt="mobile_hero_image"
+        />
+      </div>
     </section>
   );
 };

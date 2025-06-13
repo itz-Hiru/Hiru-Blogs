@@ -30,7 +30,7 @@ const LandingPage = () => {
         className="absolute top-0 left-0 h-[100vh] object-cover z-0"
       />
       <div className="relative z-10">
-        <div className="container md:px-16 lg:px-24 xl:px-32">
+        <div className="md:px-16 lg:px-24 xl:px-32">
           <Hero onClick={handleCTA} />
           <About />
           <Features />
