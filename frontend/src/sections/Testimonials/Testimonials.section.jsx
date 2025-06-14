@@ -6,7 +6,7 @@ const Testimonials = () => {
   return (
     <section
       id="testimonials"
-      className="min-h-[100vh] justify-center items-center flex flex-col pt-24"
+      className="min-h-[100vh] justify-center items-center flex flex-col pt-24 px-5"
     >
       <div className="inline-flex items-center justify-center gap-2 bg-gray-50 border border-cyan-900 rounded-full px-4 py-1 mb-2">
         <span className="text-xs text-slate-600">Testimonials</span>
@@ -19,7 +19,7 @@ const Testimonials = () => {
         Our mission is to share valuable insights and inspire readers through
         engaging, high-quality content.
       </p>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-15 items-center justify-center mt-20">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-20 md:gap-15 items-center justify-center mt-20">
         {TESTIMONIALS.map((testimonial, index) => (
           <div key={index} className="group">
             <div className="text-sm border border-sky-200/50 pb-6 rounded-lg bg-slate-100/50 shadow-xl backdrop-blur-2xl transform transition duration-300 group-hover:rotate-5">
