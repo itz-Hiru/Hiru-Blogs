@@ -6,7 +6,6 @@ import Login from "./authentication/Login.page";
 import SignUp from "./authentication/SignUp.page";
 import Footer from "../components/Footer/Footer.component";
 import Hero from "../sections/Hero/Hero.section";
-import Features from "../sections/Features/Features.section";
 import TopCharts from "../sections/TopCharts/TopCharts.section";
 import Testimonials from "../sections/Testimonials/Testimonials.section";
 import CTA from "../sections/CTA/CTA.section";
@@ -33,7 +32,6 @@ const LandingPage = () => {
         <div className="md:px-16 lg:px-24 xl:px-32">
           <Hero onClick={handleCTA} />
           <About />
-          <Features />
           <TopCharts />
           <Testimonials />
           <CTA />

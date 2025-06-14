@@ -2,7 +2,7 @@ import React from 'react'
 
 const TopCharts = () => {
   return (
-    <div>TopCharts</div>
+    <section id="topcharts" className="min-h-[100vh]"></section>
   )
 }
 
