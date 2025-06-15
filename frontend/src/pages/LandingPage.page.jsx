@@ -18,10 +18,16 @@ const LandingPage = () => {
   const [openAuthModal, setOpenAuthModal] = useState(false);
   const [currentPage, setCurrentPage] = useState("login");
 
-  const handleCTA = () => {};
+  const handleCTA = () => {
+    if (!user) {
+      openAuthModal(true);
+    } else {
+      navigate("/dashboard");
+    }
+  };
   return (
     <div>
-      <Navbar onClick={() => setOpenAuthModal(true)} user={user}/>
+      <Navbar onClick={() => setOpenAuthModal(true)} user={user} />
       <img
         src="https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/hero/gradientBackground.png"
         alt=""

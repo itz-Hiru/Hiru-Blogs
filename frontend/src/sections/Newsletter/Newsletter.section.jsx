@@ -1,10 +1,13 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { LuArrowRight } from "react-icons/lu";
 import emailjs from "@emailjs/browser";
 import toast from "react-hot-toast";
 import { validateEmail } from "../../utils/helper.util";
+import { UserContext } from "../../context/userContext.context";
 
 const Newsletter = () => {
+  const { user } = useContext(UserContext);
+
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -47,23 +50,46 @@ const Newsletter = () => {
           Subscribe to get your personal admin token and start creating your own
           blog posts instantly.
         </p>
-        <div className="flex flex-row items-center justify-center gap-3 mb-6">
-          <input
-            value={email}
-            onChange={({ target }) => setEmail(target.value)}
-            placeholder="Enter your email address"
-            type="email"
-            className="bg-white/30 px-3 py-2.5 outline-none rounded-md placeholder:text-gray-300 text-sm text-gray-100 focus-within:border focus-within:border-gray-200/50"
-          />
-          <button
-            type="button"
-            onClick={sendEmail}
-            className="bg-black text-white text-sm px-4 py-2.5 flex items-center gap-2 rounded group transition-transform duration-300"
-          >
-            {loading ? "Subscribing..." : "Subscribe"}
-            <LuArrowRight className="group-hover:translate-x-1 text-[16px]" />
-          </button>
-        </div>
+
+        {user?.role === "admin" ? (
+          <div className="flex flex-row items-center justify-center gap-3 mb-6">
+            <input
+              value={email}
+              onChange={({ target }) => setEmail(target.value)}
+              placeholder={user?.email}
+              disabled
+              type="email"
+              className="bg-white/30 px-3 py-2.5 outline-none rounded-md placeholder:text-gray-300 text-sm text-gray-100 focus-within:border focus-within:border-gray-200/50"
+            />
+            <button
+              type="button"
+              onClick={sendEmail}
+              disabled
+              className="bg-black text-white text-sm px-4 py-2.5 flex items-center gap-2 rounded group transition-transform duration-300"
+            >
+              Subscribed
+              <LuArrowRight className="group-hover:translate-x-1 text-[16px]" />
+            </button>
+          </div>
+        ) : (
+          <div className="flex flex-row items-center justify-center gap-3 mb-6">
+            <input
+              value={email}
+              onChange={({ target }) => setEmail(target.value)}
+              placeholder="Enter your email address"
+              type="email"
+              className="bg-white/30 px-3 py-2.5 outline-none rounded-md placeholder:text-gray-300 text-sm text-gray-100 focus-within:border focus-within:border-gray-200/50"
+            />
+            <button
+              type="button"
+              onClick={sendEmail}
+              className="bg-black text-white text-sm px-4 py-2.5 flex items-center gap-2 rounded group transition-transform duration-300"
+            >
+              {loading ? "Subscribing..." : "Subscribe"}
+              <LuArrowRight className="group-hover:translate-x-1 text-[16px]" />
+            </button>
+          </div>
+        )}
         <p className="text-gray-300 text-xs text-center">
           By subscribing, you will receive an admin token and you agree to our{" "}
           <span className="hover:underline cursor-pointer">Privacy Policy</span>{" "}

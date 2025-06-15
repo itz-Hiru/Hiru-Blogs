@@ -1,7 +1,10 @@
+import { useContext } from "react";
 import DESKTOP_HERO_IMAGE from "../../assets/desktop_hero_image.png";
 import MOBILE_HERO_IMAGE from "../../assets/mobile_hero_image.png";
+import { UserContext } from "../../context/userContext.context";
 
 const Hero = ({ onClick }) => {
+  const { user } = useContext(UserContext);
   return (
     <section
       className="md:min-h-[100vh] mt-10 md:mt-16 flex flex-col-reverse md:flex-row items-center justify-between pb-10"
@@ -33,12 +36,21 @@ const Hero = ({ onClick }) => {
           >
             Read Now
           </button>
-          <a
-            href="#about"
-            className="bg-transparent text-primary border border-primary px-6 py-2.5 rounded-md transition-colors duration-500 font-medium focus:text-white focus:bg-primary hover:text-white hover:bg-primary cursor-default"
-          >
-            View More
-          </a>
+          {user?.role === "admin" ? (
+            <a
+              href="/admin/dashboard"
+              className="bg-transparent text-primary border border-primary px-6 py-2.5 rounded-md transition-colors duration-500 font-medium focus:text-white focus:bg-primary hover:text-white hover:bg-primary cursor-default"
+            >
+              Go to Dashboard
+            </a>
+          ) : (
+            <a
+              href="#about"
+              className="bg-transparent text-primary border border-primary px-6 py-2.5 rounded-md transition-colors duration-500 font-medium focus:text-white focus:bg-primary hover:text-white hover:bg-primary cursor-default"
+            >
+              View More
+            </a>
+          )}
         </div>
       </div>
       <div className="flex w-full md:w-1/2 justify-end items-center">
