@@ -9,10 +9,10 @@ export const validatePassword = (password) => {
   return passwordRegex.test(password);
 };
 
-export const getTitleInitials = (title) => {
-  if (!title) return "";
+export const getInitials = (fullName) => {
+  if (!fullName) return "";
 
-  const words = title.split(" ");
+  const words = fullName.split(" ");
   let initials = "";
 
   for (let i = 0; i < Math.min(words.length, 2); i++) {

@@ -47,6 +47,7 @@ const UserProvider = ({ children }) => {
     <UserContext.Provider
       value={{
         user,
+        setUser,
         loading,
         updateUser,
         clearUser,

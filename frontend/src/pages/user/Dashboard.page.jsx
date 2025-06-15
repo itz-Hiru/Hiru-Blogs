@@ -1,8 +1,8 @@
-import React from 'react'
+import BlogLayout from "../../components/Layouts/BlogLayout.component"
 
 const UserDashboard = () => {
   return (
-    <div>UserDashboard</div>
+    <BlogLayout>UserDashboard</BlogLayout>
   )
 }
 
