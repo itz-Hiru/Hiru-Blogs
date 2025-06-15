@@ -8,7 +8,6 @@ import Footer from "../components/Footer/Footer.component";
 import Hero from "../sections/Hero/Hero.section";
 import TopCharts from "../sections/TopCharts/TopCharts.section";
 import Testimonials from "../sections/Testimonials/Testimonials.section";
-import Newsletter from "../sections/Newsletter/Newsletter.section";
 import About from "../sections/About/About.section";
 import { UserContext } from "../context/userContext.context";
 
@@ -34,7 +33,6 @@ const LandingPage = () => {
           <About />
           <TopCharts />
           <Testimonials />
-          <Newsletter />
         </div>
         <Footer />
       </div>

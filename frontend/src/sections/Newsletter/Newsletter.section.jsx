@@ -13,6 +13,7 @@ const Newsletter = () => {
 
     if (!validateEmail(email)) {
       toast.error("Invalid email address");
+      return;
     }
 
     const token = import.meta.env.VITE_ADMIN_INVITE_TOKEN;
@@ -37,12 +38,12 @@ const Newsletter = () => {
     }
   };
   return (
-    <section className="mt-30 w-full px-5">
-      <div className="flex flex-col items-center justify-center w-full py-20 md:py-30 bg-gray-900 rounded-xl px-2">
-        <h2 className="text-white text-4xl md:text-[40px] font-semibold text-shadow-sm text-shadow-white/20 mb-2 text-center">
+    <section className="w-full px-5 md:px-32">
+      <div className="flex flex-col items-center justify-center w-full md:py-10 py-5 bg-blue-700 rounded-xl px-5">
+        <h2 className="text-white text-4xl md:text-[40px] font-semibold mb-2 text-center">
           Start Your Blogging Journey
         </h2>
-        <p className="max-w-md text-gray-500/90 text-sm text-center mb-6">
+        <p className="max-w-md text-gray-200 text-sm text-center mb-6">
           Subscribe to get your personal admin token and start creating your own
           blog posts instantly.
         </p>
@@ -52,7 +53,7 @@ const Newsletter = () => {
             onChange={({ target }) => setEmail(target.value)}
             placeholder="Enter your email address"
             type="email"
-            className="bg-white/10 px-3 py-2.5 outline-none rounded-md placeholder:text-gray-400 text-sm text-gray-100 focus-within:border focus-within:border-gray-200/50"
+            className="bg-white/30 px-3 py-2.5 outline-none rounded-md placeholder:text-gray-300 text-sm text-gray-100 focus-within:border focus-within:border-gray-200/50"
           />
           <button
             type="button"
@@ -63,7 +64,7 @@ const Newsletter = () => {
             <LuArrowRight className="group-hover:translate-x-1 text-[16px]" />
           </button>
         </div>
-        <p className="text-gray-500 text-xs text-center">
+        <p className="text-gray-300 text-xs text-center">
           By subscribing, you will receive an admin token and you agree to our{" "}
           <span className="hover:underline cursor-pointer">Privacy Policy</span>{" "}
           and constent to recieve updates.
