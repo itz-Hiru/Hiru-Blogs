@@ -1,6 +1,8 @@
+import DashboardLayout from "../../components/Layouts/DashboardLayout.component"
+
 const Comments = () => {
   return (
-    <div>Comments</div>
+    <DashboardLayout activeMenu="Comments">Comments</DashboardLayout>
   )
 }
 

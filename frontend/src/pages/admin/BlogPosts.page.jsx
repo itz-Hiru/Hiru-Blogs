@@ -1,6 +1,8 @@
+import DashboardLayout from "../../components/Layouts/DashboardLayout.component"
+
 const BlogPosts = () => {
   return (
-    <div>BlogPosts</div>
+    <DashboardLayout activeMenu="Blog Posts">Posts</DashboardLayout>
   )
 }
 

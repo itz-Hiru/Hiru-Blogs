@@ -1,6 +1,10 @@
+import DashboardLayout from "../../components/Layouts/DashboardLayout.component"
+
 const Dashboard = () => {
   return (
-    <div>Dashboard</div>
+    <DashboardLayout activeMenu="Dashboard">
+      Dashboard
+    </DashboardLayout>
   )
 }
 

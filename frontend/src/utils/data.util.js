@@ -1,3 +1,5 @@
+import { LuFileStack, LuLayoutDashboard, LuLogOut } from "react-icons/lu";
+import { LiaCommentSolid } from "react-icons/lia";
 import TESTIMONIAL_01 from "../assets/testimonial-01.jpg";
 import TESTIMONIAL_02 from "../assets/testimonial-02.jpg";
 import TESTIMONIAL_03 from "../assets/testimonial-03.jpg";
@@ -78,3 +80,30 @@ export const TESTIMONIALS = [
       "It’s rare to find a blog that’s so informative yet still fun to read. Keep up the great work!",
   },
 ];
+
+export const SIDE_MENU_DATA = [
+  {
+    id: "01",
+    icon: LuLayoutDashboard,
+    label: "Dashboard",
+    path: "/admin/dashboard",
+  },
+  {
+    id: "02",
+    icon: LuFileStack,
+    label: "Blog Posts",
+    path: "/admin/posts",
+  },
+  {
+    id: "03",
+    icon: LiaCommentSolid,
+    label: "Comments",
+    path: "/admin/comments",
+  },
+  {
+    id: "04",
+    icon: LuLogOut,
+    label: "Logout",
+    path: "logout",
+  }
+]
