@@ -5,8 +5,14 @@ import { useNavigate } from "react-router-dom";
 import moment from "moment";
 import axiosInstance from "../../utils/axiosInstance.util";
 import { API_PATHS } from "../../utils/apiPaths.util";
-import { LuChartLine, LuCheckCheck, LuGalleryVerticalEnd, LuHeart } from "react-icons/lu";
+import {
+  LuChartLine,
+  LuCheckCheck,
+  LuGalleryVerticalEnd,
+  LuHeart,
+} from "react-icons/lu";
 import DashboardSummaryCard from "../../components/Cards/DashboardSummaryCard.component";
+import TagInsights from "../../components/Cards/TagInsights.component";
 
 const Dashboard = () => {
   const { user } = useContext(UserContext);
@@ -61,34 +67,52 @@ const Dashboard = () => {
               </div>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-3 md:gap-6 mt-5">
-              <DashboardSummaryCard 
+              <DashboardSummaryCard
                 icon={<LuGalleryVerticalEnd />}
                 label="Total Posts"
                 value={dashboardData?.stats?.totalPosts || 0}
                 bg-color="bg-sky-100/60"
                 color="text-sky-500"
               />
-              <DashboardSummaryCard 
+              <DashboardSummaryCard
                 icon={<LuCheckCheck />}
                 label="Published"
                 value={dashboardData?.stats?.published || 0}
                 bg-color="bg-sky-100/60"
                 color="text-sky-500"
               />
-              <DashboardSummaryCard 
+              <DashboardSummaryCard
                 icon={<LuChartLine />}
                 label="Total Views"
                 value={dashboardData?.stats?.totalViews || 0}
                 bg-color="bg-sky-100/60"
                 color="text-sky-500"
               />
-              <DashboardSummaryCard 
+              <DashboardSummaryCard
                 icon={<LuHeart />}
                 label="Total Likes"
                 value={dashboardData?.stats?.totalLikes || 0}
                 bg-color="bg-sky-100/60"
                 color="text-sky-500"
               />
+            </div>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-6 my-4 md:my-6">
+            <div className="col-span-12 md:col-span-7 bg-white p-6 rounded-2xl shadow-md shadow-gray-100 border border-gray-200/50">
+              <div className="flex items-center justify-between">
+                <h5 className="font-medium">Tag Insights</h5>
+              </div>
+              <TagInsights tagUsage={dashboardData?.tagUsage || []} />
+            </div>
+            <div className="col-span-12 md:col-span-5 bg-white p-6 rounded-2xl shadow-md shadow-gray-100 border border-gray-200/50">
+              <div className="flex items-center justify-between">
+                <h5 className="font-medium">Top Posts</h5>
+              </div>
+            </div>
+            <div className="col-span-12 bg-white p-6 rounded-2xl shadow-md shadow-gray-100 border border-gray-200/50">
+              <div className="flex items-center justify-between">
+                <h5 className="font-medium">Recent Comments</h5>
+              </div>
             </div>
           </div>
         </>
