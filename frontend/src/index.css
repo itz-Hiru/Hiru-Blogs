@@ -90,7 +90,12 @@
 
 /* Secondary button */
 .btn-secondary {
-    @apply flex items-center justify-center gap-3 text-sm font-semibold text-white bg-linear-to-r from-sky-500 to-cyan-400 px-7 py-2 rounded-lg hover:bg-black hover:text-white transition-colors cursor-pointer hover:shadow-2xl hover:shadow-rose-200;
+    @apply flex items-center justify-center gap-3 text-sm font-semibold text-white bg-linear-to-r from-sky-500 to-cyan-400 px-7 py-2 rounded-lg hover:bg-sky-600 hover:text-white transition-colors cursor-pointer hover:shadow-2xl hover:shadow-sky-200;
+}
+
+/* Delete button */
+.btn-delete {
+    @apply flex items-center justify-center gap-3 text-sm font-semibold text-white bg-linear-to-r from-rose-500 to-red-400 px-7 py-2 rounded-lg hover:bg-rose-600 hover:text-white transition-colors cursor-pointer hover:shadow-2xl hover:shadow-rose-200;
 }
 
 /* Form card */

@@ -1,0 +1,16 @@
+const DeleteAlert = ({ content, onDelete }) => {
+  return (
+    <div className="p-5">
+      <p className="text-[14px]">{content}</p>
+      <div className="flex justify-end mt-6">
+        <button
+          type="button"
+          className="btn-delete"
+          onClick={onDelete}
+        ></button>
+      </div>
+    </div>
+  );
+};
+
+export default DeleteAlert;
