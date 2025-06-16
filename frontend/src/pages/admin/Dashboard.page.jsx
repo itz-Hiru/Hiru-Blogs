@@ -14,6 +14,7 @@ import {
 import DashboardSummaryCard from "../../components/Cards/DashboardSummaryCard.component";
 import TagInsights from "../../components/Cards/TagInsights.component";
 import TopPostCard from "../../components/Cards/TopPostCard.component";
+import RecentCommentsList from "../../components/Cards/RecentCommentList.component";
 
 const Dashboard = () => {
   const { user } = useContext(UserContext);
@@ -120,10 +121,13 @@ const Dashboard = () => {
                 />
               ))}
             </div>
-            <div className="col-span-12 bg-white p-6 rounded-2xl shadow-md shadow-gray-100 border border-gray-200/50 mb-32">
+            <div className="col-span-12 bg-white p-6 rounded-2xl shadow-md shadow-gray-100 border border-gray-200/50">
               <div className="flex items-center justify-between">
                 <h5 className="font-medium">Recent Comments</h5>
               </div>
+              <RecentCommentsList
+                comments={dashboardData.recentComments || []}
+              />
             </div>
           </div>
         </>
