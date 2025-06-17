@@ -31,6 +31,7 @@ const BlogPostCreator = () => {
   const [ideaLoading, setIdeaLoading] = useState(false);
   const [postIdeas, setPostIdeas] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [publishing, setPublishing] = useState(false);
   const [openBlogPostGenForm, setOpenBlogPostGenForm] = useState({
     open: false,
     data: null,
@@ -90,6 +91,7 @@ const BlogPostCreator = () => {
     }
 
     setLoading(true);
+    setPublishing(!isDraft);
 
     try {
       if (postData.coverImageUrl instanceof File) {
@@ -123,6 +125,7 @@ const BlogPostCreator = () => {
       console.log("Error while uploading: ", error);
     } finally {
       setLoading(false);
+      setPublishing(false);
     }
   };
 
@@ -145,8 +148,12 @@ const BlogPostCreator = () => {
                   disabled={loading}
                   onClick={() => handlePublish(true)}
                 >
-                  <LuSave className="text-sm" />{" "}
-                  <span className="hidden md:block">Save as Draft</span>
+                  {loading && !publishing ? (
+                    <LuLoaderCircle className="animate-spin text-[15px]" />
+                  ) : (
+                    <LuSave className="text-sm" />
+                  )}{" "}
+                  {loading && !publishing ? "Saving..." : "Save as draft"}
                 </button>
                 <button
                   type="button"
@@ -154,12 +161,12 @@ const BlogPostCreator = () => {
                   disabled={loading}
                   onClick={() => handlePublish(false)}
                 >
-                  {loading ? (
+                  {publishing ? (
                     <LuLoaderCircle className="animate-spin text-[15px]" />
                   ) : (
                     <LuSend className="text-sm" />
                   )}{" "}
-                  {loading ? "Publishing..." : "Publish"}
+                  {publishing ? "Publishing..." : "Publish"}
                 </button>
               </div>
             </div>
