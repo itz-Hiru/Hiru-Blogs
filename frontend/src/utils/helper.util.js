@@ -21,3 +21,16 @@ export const getInitials = (fullName) => {
 
   return initials.toUpperCase();
 };
+
+export const getToastMessageByType = (type) => {
+  switch (type) {
+    case "edit":
+      return "Blog post updated successfully";
+    case "draft":
+      return "Post saved as draft";
+    case "publish":
+      return "Blog post published successfully";
+    default:
+      return null;
+  }
+};
