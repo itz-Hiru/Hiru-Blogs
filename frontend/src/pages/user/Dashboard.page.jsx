@@ -6,6 +6,7 @@ import axiosInstance from "../../utils/axiosInstance.util";
 import { API_PATHS } from "../../utils/apiPaths.util";
 import { LuGalleryVerticalEnd, LuLoaderCircle } from "react-icons/lu";
 import FeaturedBlogPost from "../../components/Cards/FeaturedBlogPost.component";
+import BlogPostCard from "../../components/Cards/BlogPostCard.component";
 
 const UserDashboard = () => {
   const navigate = useNavigate();
@@ -69,7 +70,21 @@ const UserDashboard = () => {
               onClick={() => handleClick(blogPostList[0])}
             />
           )}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8"></div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+            {blogPostList.length > 0 && blogPostList.slice(1).map((item) => (
+              <BlogPostCard 
+                key={item._id}
+                title={item.title}
+                coverImageUrl={item.coverImageUrl}
+                content={item.content}
+                tags={item.tags}
+                updatedAt={item.updatedAt ? moment(item.updatedAt).format("Do MMM YYYY") : "-"}
+                authorName={item.author.name}
+                authorProfilePicture={item.author.profileImageUrl}
+                onClick={() => handleClick(item)}
+              />
+            ))}
+          </div>
           {page < totalPages && (
             <div className="flex items-center justify-center mt-5">
               <button
