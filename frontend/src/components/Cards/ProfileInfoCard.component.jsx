@@ -14,13 +14,13 @@ const ProfileInfoCard = () => {
   return (
     <div className="flex flex-col md:flex-row items-center">
       <img
-        src={user.profileImageUrl}
+        src={user?.profileImageUrl}
         alt="Profile Photo"
         className="w-11 h-11 bg-black/40 rounded-full mr-3 mb-3 md:mb-0"
       />
       <div className="flex flex-col items-center md:items-start">
         <div className="text-[15px] text-black font-medium">
-          {user.name || ""}
+          {user?.name || ""}
         </div>
         <button
           type="button"
