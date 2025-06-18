@@ -7,6 +7,7 @@ import { API_PATHS } from "../../utils/apiPaths.util";
 import { LuGalleryVerticalEnd, LuLoaderCircle } from "react-icons/lu";
 import FeaturedBlogPost from "../../components/Cards/FeaturedBlogPost.component";
 import BlogPostCard from "../../components/Cards/BlogPostCard.component";
+import TrendingPosts from "../../sections/Trendings/TrendingPosts.section";
 
 const UserDashboard = () => {
   const navigate = useNavigate();
@@ -102,6 +103,9 @@ const UserDashboard = () => {
               </button>
             </div>
           )}
+        </div>
+        <div className="col-span-12 md:col-span-3">
+          <TrendingPosts />
         </div>
       </div>
     </BlogLayout>
