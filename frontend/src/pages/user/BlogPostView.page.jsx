@@ -9,7 +9,12 @@ import { LuDot, LuLoaderCircle, LuSparkles } from "react-icons/lu";
 import TrendingPosts from "../../sections/Trendings/TrendingPosts.section";
 import MarkdownContent from "../../components/Contents/MarkdownContent.component";
 import SharePost from "../../components/Layouts/SharePost.component";
-import { sanitizeMarkdown } from "../../utils/helper.util";
+import Login from "../authentication/Login.page";
+import SignUp from "../authentication/SignUp.page";
+import CommentReplyInput from "../../components/Inputs/CommentReplyInput.component";
+import Modal from "../../components/Modals/Modal.component";
+import UserCommentInfoCard from "../../components/Cards/UserCommentInfoCard.component";
+import toast from "react-hot-toast";
 
 const BlogPostView = () => {
   const { slug } = useParams();
@@ -24,6 +29,8 @@ const BlogPostView = () => {
   const [openSummarizeDrawer, setOpenSummarizeDrawer] = useState(false);
   const [summaryContent, setSummaryContent] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [openAuthModal, setOpenAuthModal] = useState(false);
+  const [currentPage, setCurrentPage] = useState("login");
 
   const fetchPostDetailsBySlug = async () => {
     try {
@@ -74,7 +81,24 @@ const BlogPostView = () => {
     setShowReplyForm(false);
   };
 
-  const handleAddReply = async () => {};
+  const handleAddReply = async () => {
+    try {
+      await axiosInstance.post(
+        API_PATHS.COMMENTS.ADD_COMMENT(blogPostData._id),
+        {
+          content: replyText,
+          parentComment: "",
+        }
+      );
+      toast.success("Comment sent successfully.");
+      setReplyText("");
+      setShowReplyForm(false);
+      fetchCommentsByPostId(blogPostData._id);
+    } catch (error) {
+      toast.error("Error sending comment");
+      console.error("Error while sending comment: ", error);
+    }
+  };
 
   useEffect(() => {
     fetchPostDetailsBySlug();
@@ -135,10 +159,67 @@ const BlogPostView = () => {
                 className="w-full h-96 object-cover mb-6 rounded-lg"
               />
               <div>
-                <MarkdownContent
-                  content={blogPostData?.content || ""}
-                />
+                <MarkdownContent content={blogPostData?.content || ""} />
                 <SharePost title={blogPostData.title} />
+                <div className="bg-gray-50 p-4 rounded-lg">
+                  <div className="flex items-center justify-between mb-4">
+                    <h4 className="text-lg font-semibold">Comments</h4>
+                    <button
+                      type="button"
+                      className="flex items-center justify-center gap-3 bg-linear-to-r from-sky-500 to-cyan-400 text-xs font-semibold text-white px-5 py-2 rounded-full hover:bg-black hover:text-white cursor-pointer transition-colors duration-300"
+                      onClick={() => {
+                        if (!user) {
+                          openAuthModal(true);
+                          return;
+                        }
+                        setShowReplyForm(true);
+                      }}
+                    >
+                      Add Comment
+                    </button>
+                  </div>
+                  {showReplyForm && (
+                    <div className="bg-white pt-1 pb-5 pr-8 rounded-lg mb-8">
+                      <CommentReplyInput
+                        user={user}
+                        authorName={user.name}
+                        content=""
+                        replyText={replyText}
+                        setReplyText={setReplyText}
+                        handleAddReply={handleAddReply}
+                        handleCancelReply={handleCancelReply}
+                        disableAutoGen
+                        type="new"
+                      />
+                    </div>
+                  )}
+                  {comments?.length > 0 &&
+                    comments.map((comment) => (
+                      <UserCommentInfoCard
+                        key={comment._id}
+                        commentId={comment._id || null}
+                        authorName={comment.author.name}
+                        authorProfilePicture={comment.author.profileImageUrl}
+                        content={comment.content}
+                        updatedAt={
+                          comment.updatedAt
+                            ? moment(comment.updatedAt).format("Do MMM YYYY")
+                            : "-"
+                        }
+                        post={comment.post}
+                        replies={comment.replies || []}
+                        getAllComments={() =>
+                          fetchCommentsByPostId(blogPostData._id)
+                        }
+                        onDelete={(commentId) =>
+                          setOpenDeleteAlert({
+                            open: true,
+                            data: commentId || comment._id,
+                          })
+                        }
+                      />
+                    ))}
+                </div>
               </div>
             </div>
             <div className="col-span-12 md:col-span-4">
@@ -147,6 +228,21 @@ const BlogPostView = () => {
           </div>
         </>
       )}
+      <Modal
+        isOpen={openAuthModal}
+        onClose={() => {
+          setOpenAuthModal(false);
+          setCurrentPage("login");
+        }}
+        hideHeader
+      >
+        <div>
+          {currentPage === "login" && <Login setCurrentPage={setCurrentPage} />}
+          {currentPage === "signup" && (
+            <SignUp setCurrentPage={setCurrentPage} />
+          )}
+        </div>
+      </Modal>
     </BlogLayout>
   );
 };
