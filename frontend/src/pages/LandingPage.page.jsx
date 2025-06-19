@@ -19,11 +19,7 @@ const LandingPage = () => {
   const [currentPage, setCurrentPage] = useState("login");
 
   const handleCTA = () => {
-    if (!user) {
-      openAuthModal(true);
-    } else {
-      navigate("/dashboard");
-    }
+    navigate("/dashboard");
   };
   return (
     <div>

@@ -62,6 +62,7 @@ const Footer = () => {
               href="https://github.com/itz-Hiru"
               target="_blank"
               rel="noopener noreferrer"
+              className="hover:text-gray-800 cursor-pointer transition-colors duration-300"
             >
               GitHub
             </a>
@@ -71,6 +72,7 @@ const Footer = () => {
               href="https://linkedin.com/in/hirumitha"
               target="_blank"
               rel="noopener noreferrer"
+              className="hover:text-gray-800 cursor-pointer transition-colors duration-300"
             >
               LinkedIn
             </a>
@@ -80,6 +82,7 @@ const Footer = () => {
               href="https://instagram.com/x_hiru23"
               target="_blank"
               rel="noopener noreferrer"
+              className="hover:text-gray-800 cursor-pointer transition-colors duration-300"
             >
               Instagram
             </a>
