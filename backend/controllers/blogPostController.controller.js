@@ -241,7 +241,7 @@ export const searchPost = async (req, res) => {
         { title: { $regex: q, $options: "i" } }, // title
         { content: { $regex: q, $options: "i" } }, // content
       ],
-    }).populate("author", "profileImageUrl");
+    }).populate("author", "name profileImageUrl");
 
     // Check if available
     if (!posts) {
