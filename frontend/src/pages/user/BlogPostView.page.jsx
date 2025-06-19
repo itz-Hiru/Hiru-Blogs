@@ -15,6 +15,8 @@ import CommentReplyInput from "../../components/Inputs/CommentReplyInput.compone
 import Modal from "../../components/Modals/Modal.component";
 import UserCommentInfoCard from "../../components/Cards/UserCommentInfoCard.component";
 import toast from "react-hot-toast";
+import SkeltonLoader from "../../components/Loaders/SkeltonLoader.component";
+import Drawer from "../../components/Layouts/Drawer.component";
 
 const BlogPostView = () => {
   const { slug } = useParams();
@@ -64,7 +66,31 @@ const BlogPostView = () => {
     }
   };
 
-  const generateBlogPostSummary = async () => {};
+  const generateBlogPostSummary = async () => {
+    try {
+      setSummaryContent(null);
+      setIsLoading(true);
+      setOpenSummarizeDrawer(true);
+
+      const aiResponse = await axiosInstance.post(
+        API_PATHS.AI.GENERATE_POST_SUMMARY,
+        {
+          content: blogPostData.content || "",
+        }
+      );
+
+      if (aiResponse.data) {
+        setSummaryContent(aiResponse.data);
+        toast.success("Summary generated.");
+      }
+    } catch (error) {
+      setSummaryContent(null);
+      toast.error("Failed to generate summary");
+      console.error("Error while generating summary: ", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const incrementViews = async (postId) => {
     if (!postId) return;
@@ -226,6 +252,16 @@ const BlogPostView = () => {
               <TrendingPosts />
             </div>
           </div>
+          <Drawer
+            isOpen={openSummarizeDrawer}
+            onClose={() => setOpenSummarizeDrawer(false)}
+            title={!isLoading && summaryContent?.title}
+          >
+            {isLoading && <SkeltonLoader />}
+            {!isLoading && summaryContent && (
+              <MarkdownContent content={summaryContent?.summary || ""} />
+            )}
+          </Drawer>
         </>
       )}
       <Modal
