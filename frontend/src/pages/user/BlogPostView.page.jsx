@@ -17,6 +17,7 @@ import UserCommentInfoCard from "../../components/Cards/UserCommentInfoCard.comp
 import toast from "react-hot-toast";
 import SkeltonLoader from "../../components/Loaders/SkeltonLoader.component";
 import Drawer from "../../components/Layouts/Drawer.component";
+import LikeCommentButton from "../../components/Buttons/LikeCommentButton.component";
 
 const BlogPostView = () => {
   const { slug } = useParams();
@@ -247,6 +248,11 @@ const BlogPostView = () => {
                     ))}
                 </div>
               </div>
+              <LikeCommentButton
+                postId={blogPostData._id || ""}
+                likes={blogPostData.likes || 0}
+                comments={comments?.length || 0}
+              />
             </div>
             <div className="col-span-12 md:col-span-4">
               <TrendingPosts />
