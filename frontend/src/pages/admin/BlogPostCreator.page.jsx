@@ -48,7 +48,7 @@ const BlogPostCreator = () => {
       const aiResponse = await axiosInstance.post(
         API_PATHS.AI.GENERATE_BLOG_POST_IDEAS,
         {
-          topics: "ReactJS, NextJS, NodeJS, React UI Components",
+          topics: "Software Industry, Personal Development, Work-Life Balance, Book/Movie/Song reviews",
         }
       );
 
