@@ -1,6 +1,32 @@
 export const blogPost = (title, tone) => `
-    Write a markdown-formatted blog post titled "${title}". Use a ${tone} tone. Include an introduction, subheading, code examples if relevant, and a conclusion.
-`
+    Write a markdown-formatted, long-form creative blog post titled "${title}" in a ${tone} tone.
+
+    ### Structure & Requirements:
+        1. **Start** with a strong, engaging introduction.
+        2. Include at least one **subheading** using appropriate markdown heading levels.
+        3. Use **code examples** only if the topic is related to programming or software engineering.
+        4. If images are relevant to the topic:
+        - Include them in markdown format: "![alt text](valid-image-url)"
+        - Use **real, valid, working image URLs**. Double-check that the images render properly in browsers.
+        - Do **NOT** use placeholders like "example.com" or links that return 404.
+        - If you cannot find a valid image URL, **omit the image entirely** — do not include broken links.
+        5. End with a compelling conclusion.
+
+    ### Formatting Rules:
+        - Use clear markdown for lists, bold text, italic text, code, links, etc.
+        - The entire blog post must render properly using GitHub Flavored Markdown (GFM).
+        - Return only the markdown content — no explanations, comments, or invalid content.
+
+    ### Important:
+        - For **non-tech topics**, avoid code and focus on visual storytelling using **images**.
+        - For **tech or programming topics**, use code blocks, diagrams, and links to explain.
+        - Every image included must come from a **valid, publicly accessible URL** 
+        - **Important: Image link should finish with valid image type eg: .jpg, .png, .jpeg.**
+        - **Important: Use pexels.com for get images**
+        - **Important: Blog post should be minimum 400-500 words upto 1000 or more words.**
+
+    Goal: Output a blog post that is visually engaging, correctly structured, and fully functional when rendered in a markdown viewer or parser.
+`;
 
 export const blogPostIdeasPrompt = (topic) => `
     Generate a list of 5 blog post ideas related to topic ${topic}.
