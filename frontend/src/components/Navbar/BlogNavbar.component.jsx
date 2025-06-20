@@ -1,13 +1,20 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { LuSearch } from "react-icons/lu";
 import ProfileInfoCard from "../Cards/ProfileInfoCard.component";
 import toast from "react-hot-toast";
+import { UserContext } from "../../context/userContext.context";
+import Modal from "../Modals/Modal.component";
+import SignUp from "../../pages/authentication/SignUp.page";
+import Login from "../../pages/authentication/Login.page";
 
 const BlogNavbar = () => {
   const navigate = useNavigate();
+  const { user } = useContext(UserContext);
 
   const [query, setQuery] = useState("");
+  const [openAuthModal, setOpenAuthModal] = useState(false);
+  const [currentPage, setCurrentPage] = useState("login");
 
   const handleSearch = async () => {
     if (!query) {
@@ -49,11 +56,35 @@ const BlogNavbar = () => {
               </div>
             </div>
             <div className="hidden md:block">
-              <ProfileInfoCard />
+              {user ? (
+                <ProfileInfoCard />
+              ) : (
+                <button
+                  className="bg-primary hover:bg-secondary text-[#FFFFFF] font-semibold px-8 py-2.5 rounded-full transition-all duration-500 cursor-default"
+                  onClick={() => setOpenAuthModal(true)}
+                >
+                  Login
+                </button>
+              )}
             </div>
           </div>
         </div>
       </div>
+      <Modal
+        isOpen={openAuthModal}
+        onClose={() => {
+          setOpenAuthModal(false);
+          setCurrentPage("login");
+        }}
+        hideHeader
+      >
+        <div>
+          {currentPage === "login" && <Login setCurrentPage={setCurrentPage} />}
+          {currentPage === "signup" && (
+            <SignUp setCurrentPage={setCurrentPage} />
+          )}
+        </div>
+      </Modal>
     </>
   );
 };

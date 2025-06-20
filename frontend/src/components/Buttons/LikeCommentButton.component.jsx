@@ -4,13 +4,23 @@ import { useState } from "react";
 import axiosInstance from "../../utils/axiosInstance.util";
 import { API_PATHS } from "../../utils/apiPaths.util";
 import { LuMessageCircleDashed } from "react-icons/lu";
+import { useContext } from "react";
+import { UserContext } from "../../context/userContext.context";
+import toast from "react-hot-toast";
 
 const LikeCommentButton = ({ postId, likes, comments }) => {
+  const { user } = useContext(UserContext);
+
   const [postLikes, setPostLikes] = useState(likes || 0);
   const [liked, setLiked] = useState(false);
 
   const handleLikePost = async () => {
     if (!postId) return;
+
+    if (!user) {
+      toast.error("Please login first");
+      return;
+    }
 
     try {
       const response = await axiosInstance.post(API_PATHS.POST.LIKE(postId));

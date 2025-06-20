@@ -109,6 +109,11 @@ const BlogPostView = () => {
   };
 
   const handleAddReply = async () => {
+    if (!user) {
+      toast.error("Please login first");
+      return;
+    }
+
     try {
       await axiosInstance.post(
         API_PATHS.COMMENTS.ADD_COMMENT(blogPostData._id),
@@ -196,7 +201,7 @@ const BlogPostView = () => {
                       className="flex items-center justify-center gap-3 bg-linear-to-r from-sky-500 to-cyan-400 text-xs font-semibold text-white px-5 py-2 rounded-full hover:bg-black hover:text-white cursor-pointer transition-colors duration-300"
                       onClick={() => {
                         if (!user) {
-                          openAuthModal(true);
+                          setOpenAuthModal(true);
                           return;
                         }
                         setShowReplyForm(true);
